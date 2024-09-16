@@ -11,6 +11,8 @@ import java.time.LocalDate;
 @Table(
         name = "seguro"
 )
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "tipo", discriminatorType = DiscriminatorType.STRING)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,9 +30,6 @@ public class Seguro {
     @Column(name = "seguro_id", updatable = false)
     private Long id;
 
-    @Column(name = "tipo", nullable = false, columnDefinition = "TEXT")
-    private String tipo;
-
     @Column(name = "fecha_inicio", nullable = false, columnDefinition = "DATE")
     private LocalDate fechaInicio;
     @Column(name = "fecha_vencimiento", nullable = false, columnDefinition = "DATE")
@@ -39,8 +38,4 @@ public class Seguro {
     @Column(name = "monto", nullable = false)
     private Double monto;
 
-    @Column(name = "detalle1", nullable = false, columnDefinition = "TEXT")
-    private String detalle1;
-    @Column(name = "detalle2", columnDefinition = "TEXT")
-    private String detalle2;
 }
