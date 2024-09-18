@@ -22,7 +22,7 @@ public class SeguroDTO {
 
 
     private String direccionInmueble;
-    private Double areaInmueble;
+    private String areaInmueble;
 
 
     private String marcaCelular;
