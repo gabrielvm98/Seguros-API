@@ -72,18 +72,18 @@ public class SeguroServiceImpl implements SeguroService {
             throw new InternalServerErrorException("INTERNAL_SERVER_ERROR", "INTERNAL_SERVER_ERROR");
         }
 
-        return modelMapper.map(getSeguroEntity(seguro.getId()),SeguroDTO.class);
+        return mapToSeguroDTO(getSeguroEntity(seguro.getId()));
     }
 
     @Override
     public List<SeguroDTO> getAllSeguro() throws GeneralException {
         List<Seguro> allSeguros = seguroRepository.findAll();
-        return allSeguros.stream().map(seguro -> modelMapper.map(seguro, SeguroDTO.class)).collect(Collectors.toList());
+        return allSeguros.stream().map(this::mapToSeguroDTO).collect(Collectors.toList());
     }
 
     @Override
     public SeguroDTO getSeguroById(Long id) throws GeneralException {
-        return modelMapper.map(getSeguroEntity(id),SeguroDTO.class);
+        return mapToSeguroDTO(getSeguroEntity(id));
     }
 
     @Override
@@ -98,5 +98,20 @@ public class SeguroServiceImpl implements SeguroService {
 
     private Seguro getSeguroEntity(Long id) throws GeneralException {
         return seguroRepository.findById(id).orElseThrow(() -> new NotFoundException("NOTFOUND-404", "SEGURO_NOTFOUND-404"));
+    }
+
+    private SeguroDTO mapToSeguroDTO(Seguro seguro) {
+
+        SeguroDTO dto = modelMapper.map(seguro, SeguroDTO.class);
+
+        if (seguro instanceof SeguroAuto) {
+            dto.setTipo("AUTO");
+        } else if (seguro instanceof SeguroInmueble) {
+            dto.setTipo("INMUEBLE");
+        } else if (seguro instanceof SeguroCelular) {
+            dto.setTipo("CELULAR");
+        }
+
+        return dto;
     }
 }
