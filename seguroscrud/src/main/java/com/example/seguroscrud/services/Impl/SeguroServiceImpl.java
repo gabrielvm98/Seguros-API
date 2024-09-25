@@ -88,12 +88,50 @@ public class SeguroServiceImpl implements SeguroService {
 
     @Override
     public SeguroDTO updateSeguro(Long id, SeguroDTO seguroDTO) throws GeneralException {
-        return null;
+        Seguro seguro = getSeguroEntity(id);
+
+        seguro.setFechaInicio(seguroDTO.getFechaInicio() != null ? seguroDTO.getFechaInicio() : seguro.getFechaInicio());
+        seguro.setFechaVencimiento(seguroDTO.getFechaVencimiento() != null ? seguroDTO.getFechaVencimiento() : seguro.getFechaVencimiento());
+        seguro.setMonto(seguroDTO.getMonto() != null ? seguroDTO.getMonto() : seguro.getMonto());
+
+        if (seguro instanceof SeguroAuto) {
+            SeguroAuto seguroAuto = (SeguroAuto) seguro;
+            if (seguroDTO.getModeloAuto() != null) {
+                seguroAuto.setModeloAuto(seguroDTO.getModeloAuto());
+            }
+            if (seguroDTO.getMarcaAuto() != null) {
+                seguroAuto.setMarcaAuto(seguroDTO.getMarcaAuto());
+            }
+        } else if (seguro instanceof SeguroInmueble) {
+            SeguroInmueble seguroInmueble = (SeguroInmueble) seguro;
+            if (seguroDTO.getDireccionInmueble() != null) {
+                seguroInmueble.setDireccionInmueble(seguroDTO.getDireccionInmueble());
+            }
+            if (seguroDTO.getAreaInmueble() != null) {
+                seguroInmueble.setAreaInmueble(seguroDTO.getAreaInmueble());
+            }
+        } else if (seguro instanceof SeguroCelular) {
+            SeguroCelular seguroCelular = (SeguroCelular) seguro;
+            if (seguroDTO.getMarcaCelular() != null) {
+                seguroCelular.setMarcaCelular(seguroDTO.getMarcaCelular());
+            }
+            if (seguroDTO.getModeloCelular() != null) {
+                seguroCelular.setModeloCelular(seguroDTO.getModeloCelular());
+            }
+        }
+
+        try{
+            seguro = seguroRepository.save(seguro);
+        } catch (Exception ex){
+            throw new InternalServerErrorException("INTERNAL_SERVER_ERROR", "INTERNAL_SERVER_ERROR");
+        }
+
+        return mapToSeguroDTO(getSeguroEntity(seguro.getId()));
     }
 
     @Override
     public void deleteSeguro(Long id) throws GeneralException {
-
+        seguroRepository.deleteById(id);
     }
 
     private Seguro getSeguroEntity(Long id) throws GeneralException {

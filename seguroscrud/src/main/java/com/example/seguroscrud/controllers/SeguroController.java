@@ -37,4 +37,19 @@ public class SeguroController {
         return new GeneralResponse<>("Success", String.valueOf(HttpStatus.OK), "OK",
                 seguroService.createSeguro(seguroDTO));
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/seguro/{id}")
+    public GeneralResponse<SeguroDTO> updateSeguro(@PathVariable Long id, @RequestBody SeguroDTO seguroDTO) throws GeneralException {
+        return new GeneralResponse<>("Success", String.valueOf(HttpStatus.OK), "OK",
+                seguroService.updateSeguro(id, seguroDTO));
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping("/seguro/{id}")
+    public GeneralResponse<String> deleteSeguro(@PathVariable Long id) throws GeneralException {
+        seguroService.deleteSeguro(id);
+        return new GeneralResponse<>("Success", String.valueOf(HttpStatus.OK), "OK",
+                "Delete OK");
+    }
 }
