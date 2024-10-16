@@ -13,6 +13,7 @@ import com.example.seguroscrud.services.SeguroService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +27,7 @@ public class SeguroServiceImpl implements SeguroService {
     private SeguroRepository seguroRepository;
 
     @Override
+    @Transactional
     public SeguroDTO createSeguro(SeguroDTO seguroDTO) throws GeneralException {
         Seguro seguro = null;
         switch (seguroDTO.getTipo().toUpperCase()) {
@@ -76,17 +78,20 @@ public class SeguroServiceImpl implements SeguroService {
     }
 
     @Override
+    @Transactional
     public List<SeguroDTO> getAllSeguro() throws GeneralException {
         List<Seguro> allSeguros = seguroRepository.findAll();
         return allSeguros.stream().map(this::mapToSeguroDTO).collect(Collectors.toList());
     }
 
     @Override
+    @Transactional
     public SeguroDTO getSeguroById(Long id) throws GeneralException {
         return mapToSeguroDTO(getSeguroEntity(id));
     }
 
     @Override
+    @Transactional
     public SeguroDTO updateSeguro(Long id, SeguroDTO seguroDTO) throws GeneralException {
         Seguro seguro = getSeguroEntity(id);
 
@@ -130,6 +135,7 @@ public class SeguroServiceImpl implements SeguroService {
     }
 
     @Override
+    @Transactional
     public void deleteSeguro(Long id) throws GeneralException {
         seguroRepository.deleteById(id);
     }

@@ -2,6 +2,7 @@ package com.example.seguroscrud.controllers;
 
 import com.example.seguroscrud.dtos.SeguroDTO;
 import com.example.seguroscrud.exceptions.GeneralException;
+import com.example.seguroscrud.exceptions.NotFoundException;
 import com.example.seguroscrud.responses.GeneralResponse;
 import com.example.seguroscrud.services.SeguroService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +49,13 @@ public class SeguroController {
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/polizas/{id}")
     public GeneralResponse<String> deleteSeguro(@PathVariable Long id) throws GeneralException {
-        seguroService.deleteSeguro(id);
-        return new GeneralResponse<>("Success", String.valueOf(HttpStatus.OK), "OK",
-                "Delete OK");
+        try {
+            seguroService.deleteSeguro(id);
+            return new GeneralResponse<>("Success", "200", "OK", "Delete OK");
+        } catch (NotFoundException e) {
+            return new GeneralResponse<>("Error", "404", "NOT FOUND", e.getMessage());
+        } catch (GeneralException e) {
+            return new GeneralResponse<>("Error", "500", "INTERNAL SERVER ERROR", "An error occurred");
+        }
     }
 }
