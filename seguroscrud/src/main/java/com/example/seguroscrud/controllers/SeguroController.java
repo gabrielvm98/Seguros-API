@@ -18,35 +18,35 @@ public class SeguroController {
     private SeguroService seguroService;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/seguro/{id}")
+    @GetMapping("/polizas/{id}")
     public GeneralResponse<SeguroDTO> getSeguroById(@PathVariable Long id) throws GeneralException {
         return new GeneralResponse<>("Success", String.valueOf(HttpStatus.OK), "OK",
                 seguroService.getSeguroById(id));
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/seguro")
+    @GetMapping("/polizas")
     public GeneralResponse<List<SeguroDTO>> getAllSeguro() throws GeneralException {
         return new GeneralResponse<>("Success", String.valueOf(HttpStatus.OK), "OK",
                 seguroService.getAllSeguro());
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/seguro")
+    @PostMapping("/polizas")
     public GeneralResponse<SeguroDTO> createSeguro(@RequestBody SeguroDTO seguroDTO) throws GeneralException {
         return new GeneralResponse<>("Success", String.valueOf(HttpStatus.OK), "OK",
                 seguroService.createSeguro(seguroDTO));
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping("/seguro/{id}")
+    @PutMapping("/polizas/{id}")
     public GeneralResponse<SeguroDTO> updateSeguro(@PathVariable Long id, @RequestBody SeguroDTO seguroDTO) throws GeneralException {
         return new GeneralResponse<>("Success", String.valueOf(HttpStatus.OK), "OK",
                 seguroService.updateSeguro(id, seguroDTO));
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/seguro/{id}")
+    @DeleteMapping("/polizas/{id}")
     public GeneralResponse<String> deleteSeguro(@PathVariable Long id) throws GeneralException {
         seguroService.deleteSeguro(id);
         return new GeneralResponse<>("Success", String.valueOf(HttpStatus.OK), "OK",
