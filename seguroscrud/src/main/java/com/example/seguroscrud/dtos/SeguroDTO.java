@@ -15,6 +15,7 @@ public class SeguroDTO {
     private LocalDate fechaInicio;
     private LocalDate fechaVencimiento;
     private Double monto;
+    private Long usuarioId;
 
 
     private String marcaAuto;

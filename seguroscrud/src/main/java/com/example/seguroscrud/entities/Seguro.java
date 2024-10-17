@@ -38,4 +38,8 @@ public class Seguro {
     @Column(name = "monto", nullable = false)
     private Double monto;
 
+    @ManyToOne
+    @JoinColumn(name="usuario_id")
+    private Usuario usuario;
+
 }
