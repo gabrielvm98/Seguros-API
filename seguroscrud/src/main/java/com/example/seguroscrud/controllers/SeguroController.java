@@ -18,6 +18,7 @@ public class SeguroController {
     @Autowired
     private SeguroService seguroService;
 
+    @CrossOrigin(origins = "*") // Permitir todos los orígenes
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/polizas/{id}")
     public GeneralResponse<SeguroDTO> getSeguroById(@PathVariable Long id) throws GeneralException {
@@ -25,6 +26,7 @@ public class SeguroController {
                 seguroService.getSeguroById(id));
     }
 
+    @CrossOrigin(origins = "*") // Permitir todos los orígenes
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/polizas")
     public GeneralResponse<List<SeguroDTO>> getAllSeguro() throws GeneralException {
@@ -32,6 +34,7 @@ public class SeguroController {
                 seguroService.getAllSeguro());
     }
 
+    @CrossOrigin(origins = "*") // Permitir todos los orígenes
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/polizas")
     public GeneralResponse<SeguroDTO> createSeguro(@RequestBody SeguroDTO seguroDTO) throws GeneralException {
@@ -39,6 +42,7 @@ public class SeguroController {
                 seguroService.createSeguro(seguroDTO));
     }
 
+    @CrossOrigin(origins = "*") // Permitir todos los orígenes
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/polizas/{id}")
     public GeneralResponse<SeguroDTO> updateSeguro(@PathVariable Long id, @RequestBody SeguroDTO seguroDTO) throws GeneralException {
@@ -46,6 +50,7 @@ public class SeguroController {
                 seguroService.updateSeguro(id, seguroDTO));
     }
 
+    @CrossOrigin(origins = "*") // Permitir todos los orígenes
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/polizas/{id}")
     public GeneralResponse<String> deleteSeguro(@PathVariable Long id) throws GeneralException {
